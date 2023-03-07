@@ -22,4 +22,3 @@ foo = Foo(**external_data)
 print(foo)
 
 breakpoint()
-
