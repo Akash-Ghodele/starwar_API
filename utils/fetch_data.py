@@ -33,6 +33,7 @@ def hit_url(url: str) -> Optional[Response]:
     """hits the API endpoint and returns response if successful"""
 
     response = requests.get(url)
+    print(f"[ INFO ] {response} - {url}")
     if response.status_code != 200:
         response.raise_for_status()
     else:

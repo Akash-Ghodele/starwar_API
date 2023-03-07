@@ -1,0 +1,161 @@
+[1mdiff --git a/pydantic_intro.py b/pydantic_intro.py[m
+[1mindex 9763270..46f3b59 100644[m
+[1m--- a/pydantic_intro.py[m
+[1m+++ b/pydantic_intro.py[m
+[36m@@ -22,4 +22,3 @@[m [mfoo = Foo(**external_data)[m
+ print(foo)[m
+ [m
+ breakpoint()[m
+[31m-[m
+[1mdiff --git a/requirments.txt b/requirments.txt[m
+[1mindex 07504ce..a91a02c 100644[m
+[1m--- a/requirments.txt[m
+[1m+++ b/requirments.txt[m
+[36m@@ -1,7 +1,20 @@[m
+[32m+[m[32mblack==23.1.0[m
+ certifi==2022.12.7[m
+[32m+[m[32mcffi==1.15.1[m
+ charset-normalizer==3.0.1[m
+[32m+[m[32mclick==8.1.3[m
+[32m+[m[32mcryptography==39.0.1[m
+ idna==3.4[m
+[32m+[m[32mmypy-extensions==1.0.0[m
+[32m+[m[32mpackaging==23.0[m
+[32m+[m[32mpathspec==0.11.0[m
+[32m+[m[32mplatformdirs==3.0.0[m
+[32m+[m[32mpycparser==2.21[m
+ pydantic==1.10.5[m
+[32m+[m[32mPyMySQL==1.0.2[m
+[32m+[m[32mPyYAML==6.0[m
+ requests==2.28.2[m
+[32m+[m[32mtoml==0.10.2[m
+[32m+[m[32mtomli==2.0.1[m
+ typing_extensions==4.5.0[m
+ urllib3==1.26.14[m
+\ No newline at end of file[m
+[1mdiff --git a/resources/films.py b/resources/films.py[m
+[1mindex fe6e52b..2d45fcd 100644[m
+[1m--- a/resources/films.py[m
+[1m+++ b/resources/films.py[m
+[36m@@ -1,5 +1,6 @@[m
+ from resources.base import ResourceBase[m
+ from utils.fetch_data import hit_url[m
+[32m+[m[32mfrom typing import Dict[m
+ [m
+ [m
+ class Film(ResourceBase):[m
+[36m@@ -16,4 +17,20 @@[m [mclass Film(ResourceBase):[m
+         response = hit_url(complete_url)[m
+         data = response.json()[m
+         count = data.get("count")[m
+[31m-        return count[m
+\ No newline at end of file[m
+[32m+[m[32m        return count[m
+[32m+[m
+[32m+[m[32m    def get_sample_data(self, id_: int = 1) -> Dict:[m
+[32m+[m[32m        """[m
+[32m+[m
+[32m+[m[32m        Args:[m
+[32m+[m[32m            id_: sample id of the resource[m
+[32m+[m
+[32m+[m[32m        Returns:[m
+[32m+[m[32m            data (dict): output data from API endpoint.[m
+[32m+[m[32m        """[m
+[32m+[m
+[32m+[m[32m        absolute_url = self.home_url + self.relative_url + f"/{id_}"[m
+[32m+[m[32m        response = hit_url(absolute_url)[m
+[32m+[m[32m        data = response.json()[m
+[32m+[m[32m        return data[m
+[41m+[m
+[1mdiff --git a/task_four.py b/task_four.py[m
+[1mindex 1696874..649d123 100644[m
+[1m--- a/task_four.py[m
+[1m+++ b/task_four.py[m
+[36m@@ -63,6 +63,8 @@[m [mdef store_characters():[m
+ [m
+ [m
+ if __name__ == "__main__":[m
+[32m+[m[32m    # hello"[m
+[32m+[m
+     data = Film().get_sample_data(id_=1)[m
+     film_data = Film_(**data)[m
+ [m
+[1mdiff --git a/task_three.py b/task_three.py[m
+[1mindex d44a05e..fd390d9 100644[m
+[1m--- a/task_three.py[m
+[1m+++ b/task_three.py[m
+[36m@@ -2,16 +2,57 @@[m
+ 1. TODO - import all resource classes here[m
+ 2. TODO - get count of each resource[m
+ 3. TODO - get singular resource URL from each resource[m
+[32m+[m[32m    - for example,[m
+[32m+[m[32m    - hit plural URL of starships and that will list all starships data[m
+[32m+[m[32m    - iterate on each starship data and capture singular URLs[m
+[32m+[m[32m    - all_starship_data = data.get("results")[m
+[32m+[m[32m    - you will iterate on `all_starship_data`,[m
+[32m+[m
+ 4. TODO - pull data from random 3 "singular" resource URLs[m
+[32m+[m[32m    - utilize`utils` package to produce random 3 numbers from resource ids[m
+[32m+[m[32m    - and pull data for them[m
+[32m+[m
+ 5. TODO - convert the script into CLI application[m
+[32m+[m[32m6. TODO - pretty print output (from pprint import pprint)[m
+ """[m
+ [m
+[31m-[m
+[32m+[m[32m# resource classes[m
+ from resources.films import Film[m
+[32m+[m[32mfrom resources.characters import Character[m
+[32m+[m[32mfrom resources.planets import Planet[m
+[32m+[m[32mfrom resources.species import Species[m
+[32m+[m[32mfrom resources.starships import Starship[m
+[32m+[m[32mfrom resources.vehicles import Vehicle[m
+[32m+[m
+[32m+[m[32m# pydantic classes (models)[m
+[32m+[m[32mfrom models.datamodels.characters import Character_[m
+[32m+[m[32mfrom models.datamodels.films import Film_[m
+[32m+[m[32mfrom models.datamodels.planets import Planet_[m
+[32m+[m[32mfrom models.datamodels.starships import Starship_[m
+[32m+[m[32mfrom models.datamodels.vehicles import Vehicle_[m
+[32m+[m[32mfrom models.datamodels.species import Species_[m
+ [m
+ [m
+ if __name__ == "__main__":[m
+ [m
+[31m-    film_object = Film()[m
+[31m-    total_films = film_object.get_count()[m
+[31m-    print(total_films)[m
+\ No newline at end of file[m
+[32m+[m[32m    character_data = Character().get_sample_data()[m
+[32m+[m[32m    character_data = Character_(**character_data)[m
+[32m+[m
+[32m+[m[32m    film_data = Film().get_sample_data()[m
+[32m+[m[32m    film_data = Film_(**film_data)[m
+[32m+[m
+[32m+[m[32m    planets_data = Planet().get_sample_data()[m
+[32m+[m[32m    planets_data = Planet_(**planets_data)[m
+[32m+[m
+[32m+[m[32m    species_data = Species().get_sample_data()[m
+[32m+[m[32m    species_data = Species_(**species_data)[m
+[32m+[m
+[32m+[m[32m    starships_data = Starship().get_sample_data(id_=9)[m
+[32m+[m[32m    starships_data = Starship_(**starships_data)[m
+[32m+[m
+[32m+[m[32m    vehicles_data = Vehicle().get_sample_data(id_=4)[m
+[32m+[m[32m    vehicles_data = Vehicle_(**vehicles_data)[m
+[32m+[m
+[32m+[m[32m    breakpoint()[m
+[41m+[m
+[41m+[m
+[1mdiff --git a/utils/fetch_data.py b/utils/fetch_data.py[m
+[1mindex 8c2fff9..d65310f 100644[m
+[1m--- a/utils/fetch_data.py[m
+[1m+++ b/utils/fetch_data.py[m
+[36m@@ -33,6 +33,7 @@[m [mdef hit_url(url: str) -> Optional[Response]:[m
+     """hits the API endpoint and returns response if successful"""[m
+ [m
+     response = requests.get(url)[m
+[32m+[m[32m    print(f"[ INFO ] {response} - {url}")[m
+     if response.status_code != 200:[m
+         response.raise_for_status()[m
+     else:[m

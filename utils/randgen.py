@@ -16,6 +16,6 @@ class ProduceChars:
 
     def __iter__(self):
         counter = 1
-        while counter <= self.limit:
+        while counter <= self.limit:  #10
             yield random.randint(self.start, self.end)
             counter += 1

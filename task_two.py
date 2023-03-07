@@ -27,7 +27,7 @@ import requests
 from pprint import pprint
 from typing import Dict, List
 
-from utils.fetch_data import hit_url, fetch_data
+from utils.fetch_data import hit_url
 
 
 FIRST_FILM_URL = "https://swapi.dev/api/films/1/"
@@ -37,7 +37,7 @@ def write_data_into_file(data: Dict) -> None:
     """writes dict data into a file"""
 
     with open("output.txt", "w") as fp:
-        fp.write(json.dumps(data))
+        fp.write(json.dumps(data))  # convert dict to string
 
 
 def first_task() -> Dict:
@@ -72,7 +72,7 @@ def third_task(data_: Dict) -> List:
     """pull data from swapi planets sequentially"""
 
     planets = data_.get("planets")  # returns None by default
-
+    breakpoint()
     names = []
     for planet in planets:
         planet_data = hit_url(planet)
