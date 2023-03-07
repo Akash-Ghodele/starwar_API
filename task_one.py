@@ -129,10 +129,5 @@ if __name__ == "__main__":
     """
 
     main()
-<<<<<<< HEAD
     # feature1
-=======
 
-
- # feature2
->>>>>>> ee68b6af8f8b1a7aa66603c9a30bef18429dd0ab
